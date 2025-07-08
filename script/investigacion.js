@@ -1,3 +1,28 @@
+// 👉 Función para formatear el RUT con ". y -"
+function formatearRut(valor) {
+    // Elimina todo excepto números y la letra K
+    valor = valor.replace(/[^0-9kK]/g, '').toUpperCase();
+
+    if (valor.length < 2) return valor;
+
+    let cuerpo = valor.slice(0, -1);
+    let dv = valor.slice(-1);
+
+    // Formatea el cuerpo con puntos cada 3 dígitos
+    cuerpo = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    return `${cuerpo}-${dv}`;
+}
+
+// 👉 Evento para formatear automáticamente el campo #rut al escribir
+$('#rut').on('input', function () {
+    const valor = $(this).val();
+    const formateado = formatearRut(valor);
+    $(this).val(formateado);
+});
+
+
+
 $(document).ready(function () {
     $('#btnBuscar').click(function () {
         const filtros = {
