@@ -72,6 +72,13 @@ if ($accion == "exportar_pdf") {
     include_once("../../../config/conex.php"); 
     $link = Conexion(); 
 
+    $nombre = isset($_REQUEST['nombre']) ? str_replace("'", "''", $_REQUEST['nombre']) : '';
+    $rut = isset($_REQUEST['rut']) ? str_replace("'", "''", $_REQUEST['rut']) : '';
+    $correo = isset($_REQUEST['correo']) ? str_replace("'", "''", $_REQUEST['correo']) : '';    
+    $vigente = isset($_REQUEST['vigente']) ? $_REQUEST['vigente'] : '';
+    $cargo = isset($_REQUEST['cargo']) ? str_replace("'", "''", $_REQUEST['cargo']) : '';
+    $area = isset($_REQUEST['area']) ? str_replace("'", "''", $_REQUEST['area']) : '';
+
     $sql = "SELECT 
         (rtrim(B.user_nombre)+' '+B.user_paterno+' '+B.user_materno) AS nombre,
         B.user_rut,
@@ -81,7 +88,27 @@ if ($accion == "exportar_pdf") {
         C.area_nombre
     FROM Seguridad.dbo.usuario AS B
     INNER JOIN Seguridad.dbo.cargo AS A ON B.cargo_codigo = A.cargo_codigo
-    INNER JOIN Seguridad.dbo.areas AS C ON A.area_codigo = C.area_codigo";
+    INNER JOIN Seguridad.dbo.areas AS C ON A.area_codigo = C.area_codigo
+    WHERE 1=1";
+
+    if ($nombre != '') {
+        $sql .= " AND (B.user_nombre LIKE '%$nombre%' OR B.user_paterno LIKE '%$nombre%' OR B.user_materno LIKE '%$nombre%')";
+    }
+    if ($rut != '') {
+        $sql .= " AND B.user_rut LIKE '%$rut%'";
+    }
+    if ($correo != '') {
+        $sql .= " AND B.user_correo LIKE '%$correo%'";
+    }
+    if ($vigente != '') {
+        $sql .= " AND B.user_vigente = '$vigente'";
+    }
+    if ($cargo != '') {
+        $sql .= " AND A.cargo_nombre LIKE '%$cargo%'";
+    }
+    if ($area != '') {
+        $sql .= " AND C.area_nombre LIKE '%$area%'";
+    }
 
     $stmt = mssql_query($sql, $link);
 
@@ -89,8 +116,7 @@ if ($accion == "exportar_pdf") {
         die(json_encode(["success" => false, "error" => mssql_get_last_message()]));
     }
 
-    require_once("fpdf.php");
-    $pdf = new FPDF('L', 'mm', 'A3'); // 'L' para horizontal
+    $pdf = new FPDF('L', 'mm', 'A3'); // horizontal
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 18);
     $pdf->Cell(0, 10, 'Resultados de la Busqueda', 0, 1, 'C');
@@ -98,7 +124,7 @@ if ($accion == "exportar_pdf") {
     $pdf->SetFont('Arial', 'B', 14);
     $pdf->SetFillColor(200, 220, 255);
 
-    // Encabezado tabla
+    // Encabezado
     $pdf->Cell(80, 10, 'Nombre', 1, 0, 'C', true);
     $pdf->Cell(28, 10, 'RUT', 1, 0, 'C', true);
     $pdf->Cell(20, 10, 'Vigente', 1, 0, 'C', true);
@@ -106,7 +132,6 @@ if ($accion == "exportar_pdf") {
     $pdf->Cell(100, 10, 'Cargo', 1, 0, 'C', true);
     $pdf->Cell(100, 10, 'Area', 1, 1, 'C', true);
 
-    // Cuerpo tabla
     $pdf->SetFont('Arial', '', 11);
 
     while ($row = mssql_fetch_assoc($stmt)) {
@@ -119,7 +144,6 @@ if ($accion == "exportar_pdf") {
         $pdf->Ln();
     }
 
-    // Guardar PDF
     $nombreArchivo = 'resultados_busqueda_' . time() . '.pdf';
     $rutaArchivo = 'pdf_exportados/' . $nombreArchivo;
     $pdf->Output('F', $rutaArchivo);
@@ -129,4 +153,3 @@ if ($accion == "exportar_pdf") {
         "url" => "/COMASA/SISTEMAS/investigacion/json/" . $rutaArchivo
     ]);
 }
-
