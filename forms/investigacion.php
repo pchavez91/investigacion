@@ -29,8 +29,16 @@
         </select>
         <input type="text" id="cargo" class="form-control" placeholder="Cargo">
         <input type="text" id="area" class="form-control" placeholder="Área">
+        <br>
+        <br>
         <button type="button" id="btnBuscar" class="btn btn-primary">Buscar</button>
+        <button type="reset" id="btnLimpiar" class="btn btn-secondary">Limpiar</button>
     </form>
+    <br>
+    <!--boton exportar a pdf-->
+    <button id="btnExportarPDF" class="btn btn-success">Exportar a PDF</button>
+    <button id="btnExportarExcel" class="btn btn-success">Exportar a Excel</button>
+    
 
     <hr>
     <div class="table-responsive">

@@ -2,6 +2,7 @@
 
 header("Content-Type: text/html;charset=utf-8");
 include_once("../../../config/conex.php");
+require_once("fpdf.php");
 $link = Conexion();
 
 $accion   = $_REQUEST['accion'];
@@ -65,3 +66,67 @@ if ($accion == "datos_personales") {
 
             echo $arreglo;
 }
+
+if ($accion == "exportar_pdf") {
+    require_once("fpdf.php");
+    include_once("../../../config/conex.php"); 
+    $link = Conexion(); 
+
+    $sql = "SELECT 
+        (rtrim(B.user_nombre)+' '+B.user_paterno+' '+B.user_materno) AS nombre,
+        B.user_rut,
+        CASE B.user_vigente WHEN 'S' THEN 'SI' ELSE 'NO' END AS user_vigente,
+        B.user_correo,
+        A.cargo_nombre,
+        C.area_nombre
+    FROM Seguridad.dbo.usuario AS B
+    INNER JOIN Seguridad.dbo.cargo AS A ON B.cargo_codigo = A.cargo_codigo
+    INNER JOIN Seguridad.dbo.areas AS C ON A.area_codigo = C.area_codigo";
+
+    $stmt = mssql_query($sql, $link);
+
+    if (!$stmt) {
+        die(json_encode(["success" => false, "error" => mssql_get_last_message()]));
+    }
+
+    require_once("fpdf.php");
+    $pdf = new FPDF('L', 'mm', 'A3'); // 'L' para horizontal
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 18);
+    $pdf->Cell(0, 10, 'Resultados de la Busqueda', 0, 1, 'C');
+    $pdf->Ln(5);
+    $pdf->SetFont('Arial', 'B', 14);
+    $pdf->SetFillColor(200, 220, 255);
+
+    // Encabezado tabla
+    $pdf->Cell(80, 10, 'Nombre', 1, 0, 'C', true);
+    $pdf->Cell(28, 10, 'RUT', 1, 0, 'C', true);
+    $pdf->Cell(20, 10, 'Vigente', 1, 0, 'C', true);
+    $pdf->Cell(80, 10, 'Correo', 1, 0, 'C', true);
+    $pdf->Cell(100, 10, 'Cargo', 1, 0, 'C', true);
+    $pdf->Cell(100, 10, 'Area', 1, 1, 'C', true);
+
+    // Cuerpo tabla
+    $pdf->SetFont('Arial', '', 11);
+
+    while ($row = mssql_fetch_assoc($stmt)) {
+        $pdf->Cell(80, 10, utf8_decode($row['nombre']), 1);
+        $pdf->Cell(28, 10, $row['user_rut'], 1);
+        $pdf->Cell(20, 10, $row['user_vigente'], 1);
+        $pdf->Cell(80, 10, utf8_decode($row['user_correo']), 1);
+        $pdf->Cell(100, 10, utf8_decode($row['cargo_nombre']), 1);
+        $pdf->Cell(100, 10, utf8_decode($row['area_nombre']), 1);
+        $pdf->Ln();
+    }
+
+    // Guardar PDF
+    $nombreArchivo = 'resultados_busqueda_' . time() . '.pdf';
+    $rutaArchivo = 'pdf_exportados/' . $nombreArchivo;
+    $pdf->Output('F', $rutaArchivo);
+
+    echo json_encode([
+        "success" => true,
+        "url" => "/COMASA/SISTEMAS/investigacion/json/" . $rutaArchivo
+    ]);
+}
+

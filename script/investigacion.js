@@ -22,7 +22,6 @@ $('#rut').on('input', function () {
 });
 
 
-
 $(document).ready(function () {
     $('#btnBuscar').click(function () {
         const filtros = {
@@ -65,6 +64,36 @@ $(document).ready(function () {
                 alert('Error al buscar los datos');
             }
         });
+    });
+});
+
+//boton exportar a pdf id=btnExportar
+$('#btnExportarPDF').click(function () {
+    const filtros = {
+        accion: "exportar_pdf",
+        nombre: $('#nombre').val(),
+        rut: $('#rut').val(),
+        correo: $('#correo').val(),
+        vigente: $('#vigente').val(),
+        cargo: $('#cargo').val(),
+        area: $('#area').val()
+    };
+
+    $.ajax({
+        url: 'json/investigacion.php',
+        method: 'GET',
+        data: filtros,
+        dataType: 'json',
+        success: function (respuesta) {
+            if (respuesta.success) {
+                window.open(respuesta.url, '_blank');
+            } else {
+                alert('Error al generar el PDF');
+            }
+        },
+        error: function () {
+            alert('Error al exportar a PDF');
+        }
     });
 });
 
