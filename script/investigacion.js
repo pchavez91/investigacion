@@ -97,4 +97,20 @@ $('#btnExportarPDF').click(function () {
     });
 });
 
+//boton exportar a excel
+$('#btnExportarExcel').click(function () {
+    const filtros = {
+        accion: "exportar_excel",
+        nombre: $('#nombre').val(),
+        rut: $('#rut').val(),
+        correo: $('#correo').val(),
+        vigente: $('#vigente').val(),
+        cargo: $('#cargo').val(),
+        area: $('#area').val()
+    };
 
+    const queryString = $.param(filtros); // convierte el objeto en string ?key=value...
+    const url = 'json/investigacion.php?' + queryString;
+
+    window.open(url, '_blank'); // descarga directa
+});

@@ -37,8 +37,8 @@
     <br>
     <!--boton exportar a pdf-->
     <button id="btnExportarPDF" class="btn btn-success">Exportar a PDF</button>
+    <!---boton exportar a excel-->
     <button id="btnExportarExcel" class="btn btn-success">Exportar a Excel</button>
-    
 
     <hr>
     <div class="table-responsive">
