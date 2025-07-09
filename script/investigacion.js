@@ -1,6 +1,5 @@
-// 👉 Función para formatear el RUT con ". y -"
+// función para formatear el RUT con ". y -"
 function formatearRut(valor) {
-    // Elimina todo excepto números y la letra K
     valor = valor.replace(/[^0-9kK]/g, '').toUpperCase();
 
     if (valor.length < 2) return valor;
@@ -14,7 +13,7 @@ function formatearRut(valor) {
     return `${cuerpo}-${dv}`;
 }
 
-// 👉 Evento para formatear automáticamente el campo #rut al escribir
+// Evento para formatear automáticamente el campo #rut al escribir
 $('#rut').on('input', function () {
     const valor = $(this).val();
     const formateado = formatearRut(valor);
@@ -67,7 +66,6 @@ $(document).ready(function () {
     });
 });
 
-//boton exportar a pdf id=btnExportar
 $('#btnExportarPDF').click(function () {
     const filtros = {
         accion: "exportar_pdf",
@@ -79,23 +77,11 @@ $('#btnExportarPDF').click(function () {
         area: $('#area').val()
     };
 
-    $.ajax({
-        url: 'json/investigacion.php',
-        method: 'GET',
-        data: filtros,
-        dataType: 'json',
-        success: function (respuesta) {
-            if (respuesta.success) {
-                window.open(respuesta.url, '_blank');
-            } else {
-                alert('Error al generar el PDF');
-            }
-        },
-        error: function () {
-            alert('Error al exportar a PDF');
-        }
-    });
+    const queryString = $.param(filtros);
+    const url = 'json/investigacion.php?' + queryString;
+    window.open(url, '_blank'); // así se abre directamente el PDF en una pestaña
 });
+
 
 //boton exportar a excel
 $('#btnExportarExcel').click(function () {
