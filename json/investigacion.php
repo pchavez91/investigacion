@@ -69,7 +69,6 @@ if ($accion == "datos_personales") {
 
 if ($accion == "exportar_pdf") {
     ob_clean();
-    // Cabecera correcta para PDF
     header("Content-Type: application/pdf");
 
     require_once(__DIR__ . "/../tcpdf/tcpdf.php");
@@ -122,7 +121,7 @@ if ($accion == "exportar_pdf") {
     $pdf->Cell(0, 10, 'Resultados de la Búsqueda', 0, 1, 'C');
     $pdf->Ln(5);
 
-    $pdf->SetFont('helvetica', '', 10);
+    $pdf->SetFont('dejavusans', '', 10);
     $html = '
     <table border="1" cellpadding="4">
         <thead style="background-color:#f2f2f2;">
@@ -139,21 +138,23 @@ if ($accion == "exportar_pdf") {
     ';
 
     while ($row = mssql_fetch_assoc($stmt)) {
-        $html .= '<tr>
-            <td>' . htmlentities($row['nombre']) . '</td>
-            <td>' . htmlentities($row['user_rut']) . '</td>
-            <td>' . htmlentities($row['user_vigente']) . '</td>
-            <td>' . htmlentities($row['user_correo']) . '</td>
-            <td>' . htmlentities($row['cargo_nombre']) . '</td>
-            <td>' . htmlentities($row['area_nombre']) . '</td>
-        </tr>';
-    }
+    $html .= '<tr>
+        <td>' . htmlentities(utf8_encode($row['nombre'])) . '</td>
+        <td>' . htmlentities(utf8_encode($row['user_rut'])) . '</td>
+        <td>' . htmlentities(utf8_encode($row['user_vigente'])) . '</td>
+        <td>' . htmlentities(utf8_encode($row['user_correo'])) . '</td>
+        <td>' . htmlentities(utf8_encode($row['cargo_nombre'])) . '</td>
+        <td>' . htmlentities(utf8_encode($row['area_nombre'])) . '</td>
+    </tr>';
+}
+
 
     $html .= '</tbody></table>';
     $pdf->writeHTML($html, true, false, true, false, '');
     $pdf->Output('resultados_busqueda.pdf', 'I');
     exit;
 }
+
 
 
 

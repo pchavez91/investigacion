@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
 <HEAD>
 		   
   <div class="panel panel-info">
