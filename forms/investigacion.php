@@ -6,7 +6,7 @@
     <div class="panel box-shadow-none content-header margin-topbar">
         <div class="form-group col-xs-12 col-lg-12" style="background-color: #39b3d7; border: 1px solid; border-color:#269abc; padding: 10px 3px 10px 5px; line-height: 15px; top:-15px;">
             <!--colocar al estilo-->
-            <b><font size=3 color="white"><center>INVESTIGACION</center></font></b>
+            <b><font size=3 color="white"><center>BUSQUEDA DE USUARIOS</center></font></b>
         </div>
     </div>
   </div>
