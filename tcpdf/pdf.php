@@ -1542,6 +1542,9 @@ $pdf->writeHTML($html2, true, false, true, false, '');
 $pdf->AddPage('P');	
 $pdf->writeHTML($html3, true, false, true, false, '');	
 
+//Limpia el bufer
+ob_end_clean();
+
 // create new PDF document
 $pdf->Output('Informe_investigacion.pdf', 'I');	
 	
