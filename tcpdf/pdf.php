@@ -1535,6 +1535,7 @@ $html3 ='       <div style="background-color: #d7dbdd; text-align:center;"><stro
 				</table>
 				
 		';
+
 		
 $pdf->writeHTML($html, true, false, true, false, '');	
 $pdf->AddPage('P');	

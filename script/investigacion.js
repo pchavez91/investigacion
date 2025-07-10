@@ -100,3 +100,11 @@ $('#btnExportarExcel').click(function () {
 
     window.open(url, '_blank'); // descarga directa
 });
+
+//boton exportar a pdf nuevo
+$('#btnExportarPDFNuevo').click(function () {
+
+    var PDF=$('#tablaResultados').val();
+
+    window.open("tcpdf/pdfNuevo.php?PDF="+PDF,"","top=10,left=300,width=700,height=600");
+});
