@@ -47,6 +47,26 @@ if (!$stmt) {
     die("Error SQL: " . mssql_get_last_message());
 }
 
+global $id_informe;
+$QR = __DIR__ . '/images/qr.png';
+
+$texto = 'http://190.13.129.41/sistemas/investigacion/tcpdf/pdf.php?id_informe=' . $id_informe;
+
+// Generar código QR y guardarlo en qr.png
+if (function_exists('imagecreatefrompng')) {
+    $url = 'https://api.qrserver.com/v1/create-qr-code/?data=' . urlencode($texto) . '&size=100x100';
+    $image = @imagecreatefrompng($url);
+    if ($image) {
+        imagepng($image, $QR);
+        imagedestroy($image);
+    } else {
+        die("Error al generar el código QR.");
+    }
+} else {
+    die("La función imagecreatefrompng no está disponible.");
+}
+
+
 $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('COMASA');
@@ -55,10 +75,15 @@ $pdf->SetMargins(15, 25, 15);
 $pdf->SetAutoPageBreak(TRUE, 20);
 $pdf->AddPage();
 
+//codigo QR
+if (file_exists($QR)) {
+    $pdf->Image($QR, 250, 21, 18, 18); // X, Y, Ancho, Alto (en mm)
+}
+
 // Logo 
 $logoPath = __DIR__ . '/images/logo.jpg';
 if (file_exists($logoPath)) {
-    $pdf->Image($logoPath, 15, 25, 45); // X=15, Y=15, ancho=45mm
+    $pdf->Image($logoPath, 16, 20, 55); // X=15, Y=15, ancho=45mm
 }
 
 // Título 
@@ -68,7 +93,7 @@ $pdf->Cell(0, 10, 'BUSQUEDA DE USUARIOS', 0, 1);
 
 
 // Fecha 
-$pdf->SetFont('helvetica', '', 16);
+$pdf->SetFont('helvetica', '', 14);
 $pdf->SetXY(250, 14);
 $pdf->Cell(0, 7, 'Fecha: ' . date('d/m/Y H:i'), 0, 1, 'R');
 
