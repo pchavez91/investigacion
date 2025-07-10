@@ -79,59 +79,35 @@ $pdf->Line(15, 45, 280, 45);
 
 $pdf->Ln(20);
 
-// Tabla con estilos
-$pdf->SetFont('dejavusans', '', 10);
-$html = '
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-    th {
-        background-color: #00467f;
-        color: white;
-        padding: 8px;
-        text-align: center;
-        font-weight: bold;
-        border: 1px solid #ddd;
-    }
-    td {
-        border: 1px solid #ddd;
-        padding: 6px;
-        font-size: 9pt;
-    }
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-</style>
-<table>
-    <thead>
-        <tr>
-            <th width="16.7%">Nombre</th>
-            <th width="10%">RUT</th>
-            <th width="8%">Vigente</th>
-            <th width="25%">Correo</th>
-            <th width="17%">Cargo</th>
-            <th width="17%">Área</th>
-        </tr>
-    </thead>
-    <tbody>
-';
+// Encabezado de tabla
+$pdf->SetFont('helvetica', 'B', 12);
+$pdf->SetFillColor(0, 70, 127);        // Fondo azul cabecera
+$pdf->SetTextColor(255, 255, 255);     // Texto blanco cabecera
+$pdf->SetDrawColor(50, 50, 50);        // Color de borde
 
+// Cabeceras con bordes marcados entre columnas
+$pdf->Cell(75, 10, 'Nombre', 1, 0, 'C', 1);
+$pdf->Cell(25, 10, 'RUT', 1, 0, 'C', 1);
+$pdf->Cell(20, 10, 'Vigente', 1, 0, 'C', 1);    
+$pdf->Cell(60, 10, 'Correo', 1, 0, 'C', 1);
+$pdf->Cell(50, 10, 'Cargo', 1, 0, 'C', 1);
+$pdf->Cell(50, 10, 'Área', 1, 1, 'C', 1); 
+
+// Restaurar estilos para datos
+$pdf->SetFont('helvetica', '', 10);
+$pdf->SetTextColor(0, 0, 0); 
+$pdf->SetFillColor(240, 240, 240); 
+
+// Rellenar la tabla con los datos
 while ($row = mssql_fetch_assoc($stmt)) {
-    $html .= '<tr>
-        <td>' . htmlentities(utf8_encode($row['nombre'])) . '</td>
-        <td>' . htmlentities(utf8_encode($row['user_rut'])) . '</td>
-        <td align="center">' . htmlentities(utf8_encode($row['user_vigente'])) . '</td>
-        <td>' . htmlentities(utf8_encode($row['user_correo'])) . '</td>
-        <td>' . htmlentities(utf8_encode($row['cargo_nombre'])) . '</td>
-        <td>' . htmlentities(utf8_encode($row['area_nombre'])) . '</td>
-    </tr>';
-}
+    $pdf->Cell(75, 10, htmlentities(utf8_encode($row['nombre'])), 1, 0, 'L');
+    $pdf->Cell(25, 10, htmlentities(utf8_encode($row['user_rut'])), 1, 0, 'L');
+    $pdf->Cell(20, 10, htmlentities(utf8_encode($row['user_vigente'])), 1, 0, 'C');
+    $pdf->Cell(60, 10, htmlentities(utf8_encode($row['user_correo'])), 1, 0, 'L');
+    $pdf->Cell(50, 10, htmlentities(utf8_encode($row['cargo_nombre'])), 1, 0, 'L');
+    $pdf->Cell(50, 10, htmlentities(utf8_encode($row['area_nombre'])), 1, 1, 'L');
+}   
 
-$html .= '</tbody></table>';
-
-$pdf->writeHTML($html, true, false, true, false, '');
 
 // Pie de página con número de página
 class MYPDF extends TCPDF {
