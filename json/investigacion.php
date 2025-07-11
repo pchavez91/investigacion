@@ -231,13 +231,11 @@ if ($accion == "exportar_excel") {
 }
 
 if ($_GET['accion'] == 'detalle_usuario') {
-    $rut = str_replace(['.', '-'], '', $_GET['rut']);
-
+    $rut = $_GET['rut'];
 
     $sql = "SELECT 
                 (RTRIM(B.user_nombre) + ' ' + B.user_paterno + ' ' + B.user_materno) AS nombre,
                 B.user_rut,
-                CASE B.user_vigente WHEN 'S' THEN 'SI' ELSE 'NO' END AS user_vigente,
                 B.user_correo,
                 A.cargo_nombre,
                 C.area_nombre
@@ -247,9 +245,12 @@ if ($_GET['accion'] == 'detalle_usuario') {
             WHERE B.user_rut = '$rut'";
 
     $res = mssql_query($sql, $link);
-    $fila = mssql_fetch_assoc($res);
+    if ($fila = mssql_fetch_assoc($res)) {
+        echo json_encode($fila);
+    } else {
+        echo json_encode(["error" => "No encontrado"]);
+    }
 
-    echo json_encode($fila);
     exit;
 }
 

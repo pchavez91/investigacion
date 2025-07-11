@@ -49,7 +49,7 @@ $(document).ready(function () {
                     datos.forEach(function (item) {
                         html += `<tr>
                                     <td>
-                                        <button class="btnDetalle" data-id="${item.user_rut}">
+                                        <button class="btnDetalle" data-id="${item.user_rut}" title="Ver detalles" style="padding: 2px 5px; font-size: 16px; background: none; border: none; cursor: pointer;">
                                             🔍
                                         </button>
                                     </td>

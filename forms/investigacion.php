@@ -117,7 +117,8 @@
     <!-- Contenido pestaña: Contacto -->
     <div class="tab-content" id="tabContacto" style="display: none;">
       <p><strong>Correo:</strong> <span id="modalCorreo"></span></p>
-      <!-- puedes agregar teléfono u otra info aquí -->
+      <p><strong>Teléfono:</strong> <span id="modalTelefono"></span></p>
+      <p><strong>Dirección:</strong> <span id="modalDireccion"></span></p>
     </div>
 
     <div style="text-align: right; margin-top: 20px;">
