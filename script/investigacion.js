@@ -140,3 +140,13 @@ $(document).on('click', '.btnDetalle', function () {
 function cerrarModal() {
     $('#modalDetalle').fadeOut();
 }
+
+function mostrarTab(id) {
+  // Ocultar todas las pestañas
+  $('.tab-content').hide();
+  // Quitar clase activa de todos los botones
+  $('.tab-btn').removeClass('active');
+  // Mostrar la pestaña actual y activar su botón
+  $('#' + id).show();
+  $('button[onclick="mostrarTab(\'' + id + '\')"]').addClass('active');
+}

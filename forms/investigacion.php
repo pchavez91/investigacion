@@ -1,4 +1,37 @@
 <HEAD>
+
+  <style>
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: #eee;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .tab-btn:hover {
+      background: #ddd;
+    }
+
+    .tab-btn.active {
+      background: #fff;
+      border-bottom: 3px solid #007BFF;
+      color: #007BFF;
+    }
+
+    .tab-content {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+
 		   
   <div class="panel panel-info">
  
@@ -62,16 +95,36 @@
     </div>
   </div>
 
-  <!-- Modal oculto -->
-  <div id="modalDetalle" style="display:none; position:fixed; top:20%; left:30%; width:40%; background:#fff; padding:20px; border:1px solid #aaa; box-shadow: 0 0 10px #000;">
-    <h3>Detalles del Usuario</h3>
-    <p><strong>Nombre:</strong> <span id="modalNombre"></span></p>
-    <p><strong>RUT:</strong> <span id="modalRut"></span></p>
-    <p><strong>Correo:</strong> <span id="modalCorreo"></span></p>
-    <p><strong>Cargo:</strong> <span id="modalCargo"></span></p>
-    <p><strong>Área:</strong> <span id="modalArea"></span></p>
-    <button onclick="cerrarModal()">Cerrar</button>
+  <!-- Modal con estilo y pestañas -->
+  <div id="modalDetalle" style="display:none; position:fixed; top:15%; left:50%; transform:translateX(-50%); width:50%; background:#fdfdfd; padding:20px; border-radius:10px; border:1px solid #ccc; box-shadow: 0 0 20px rgba(0,0,0,0.3); font-family: Arial, sans-serif; z-index:1000;">
+
+    <h3 style="margin-top: 0; color: #007BFF; text-align:center;">Detalles del Usuario</h3>
+
+    <!-- Pestañas -->
+    <div style="display: flex; border-bottom: 1px solid #ccc; margin-bottom: 15px;">
+      <button class="tab-btn active" onclick="mostrarTab('tabInfo')">Información</button>
+      <button class="tab-btn" onclick="mostrarTab('tabContacto')">Contacto</button>
+    </div>
+
+    <!-- Contenido pestaña: Información -->
+    <div class="tab-content" id="tabInfo" style="display: block;">
+      <p><strong>Nombre:</strong> <span id="modalNombre"></span></p>
+      <p><strong>RUT:</strong> <span id="modalRut"></span></p>
+      <p><strong>Cargo:</strong> <span id="modalCargo"></span></p>
+      <p><strong>Área:</strong> <span id="modalArea"></span></p>
+    </div>
+
+    <!-- Contenido pestaña: Contacto -->
+    <div class="tab-content" id="tabContacto" style="display: none;">
+      <p><strong>Correo:</strong> <span id="modalCorreo"></span></p>
+      <!-- puedes agregar teléfono u otra info aquí -->
+    </div>
+
+    <div style="text-align: right; margin-top: 20px;">
+      <button onclick="cerrarModal()" style="padding: 8px 16px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Cerrar</button>
+    </div>
   </div>
+
 
 </body>
 
