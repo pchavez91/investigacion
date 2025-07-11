@@ -48,15 +48,20 @@ $(document).ready(function () {
                 } else {
                     datos.forEach(function (item) {
                         html += `<tr>
-                            <td>${item.nombre}</td>
-                            <td>${item.user_rut}</td>
-                            <td>${item.user_vigente}</td>
-                            <td>${item.user_correo}</td>
-                            <td>${item.cargo_nombre}</td>
-                            <td>${item.area_nombre}</td>
-                        </tr>`;
-                    });
-                }
+                                    <td>
+                                        <button class="btnDetalle" data-id="${item.user_rut}">
+                                            🔍
+                                        </button>
+                                    </td>
+                                    <td>${item.nombre}</td>
+                                    <td style="white-space: nowrap;">${item.user_rut}</td>
+                                    <td>${item.user_vigente}</td>
+                                    <td>${item.user_correo}</td>
+                                    <td>${item.cargo_nombre}</td>
+                                    <td>${item.area_nombre}</td>
+                                </tr>`;
+                        });  
+                    }
                 $('#tablaResultados tbody').html(html);
             },
             error: function () {
@@ -108,3 +113,30 @@ $('#btnExportarPDFNuevo').click(function () {
 
     window.open("tcpdf/pdfNuevo.php?PDF="+PDF,"","top=10,left=300,width=700,height=600");
 });
+
+$(document).on('click', '.btnDetalle', function () {
+    const rut = $(this).data('id');
+
+    $.ajax({
+        url: 'json/investigacion.php',
+        method: 'GET',
+        data: { accion: 'detalle_usuario', rut: rut },
+        dataType: 'json',
+        success: function (data) {
+            $('#modalNombre').text(data.nombre);
+            $('#modalRut').text(data.rut);
+            $('#modalCorreo').text(data.correo);
+            $('#modalCargo').text(data.cargo);
+            $('#modalArea').text(data.area);
+
+            $('#modalDetalle').fadeIn();
+        },
+        error: function () {
+            alert('Error al cargar los detalles');
+        }
+    });
+});
+
+function cerrarModal() {
+    $('#modalDetalle').fadeOut();
+}

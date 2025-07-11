@@ -229,3 +229,27 @@ if ($accion == "exportar_excel") {
     echo "</table>";
     exit;
 }
+
+if ($_GET['accion'] == 'detalle_usuario') {
+    $rut = str_replace(['.', '-'], '', $_GET['rut']);
+
+
+    $sql = "SELECT 
+                (RTRIM(B.user_nombre) + ' ' + B.user_paterno + ' ' + B.user_materno) AS nombre,
+                B.user_rut,
+                CASE B.user_vigente WHEN 'S' THEN 'SI' ELSE 'NO' END AS user_vigente,
+                B.user_correo,
+                A.cargo_nombre,
+                C.area_nombre
+            FROM Seguridad.dbo.usuario AS B
+            INNER JOIN Seguridad.dbo.cargo AS A ON B.cargo_codigo = A.cargo_codigo
+            INNER JOIN Seguridad.dbo.areas AS C ON A.area_codigo = C.area_codigo
+            WHERE B.user_rut = '$rut'";
+
+    $res = mssql_query($sql, $link);
+    $fila = mssql_fetch_assoc($res);
+
+    echo json_encode($fila);
+    exit;
+}
+

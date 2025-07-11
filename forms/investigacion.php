@@ -42,12 +42,13 @@
     <button id="btnExportarPDFNuevo" class="btn btn-success">Exportar a PDF Nuevo</button>
 
     <hr>
-    <div class="table-responsive">
-        <table id="tablaResultados" class="table table-bordered">
+    <div class="table-responsive" style="overflow-x: auto;">
+        <table id="tablaResultados" class="table table-bordered" style="min-width: 1000px;">
             <thead>
                 <tr>
+                    <th>Detalle</th>
                     <th>Nombre</th>
-                    <th>RUT</th>
+                    <th style="white-space: nowrap; width: 12%;">RUT</th>
                     <th>Vigente</th>
                     <th>Correo</th>
                     <th>Cargo</th>
@@ -60,6 +61,18 @@
         </table>
     </div>
   </div>
+
+  <!-- Modal oculto -->
+  <div id="modalDetalle" style="display:none; position:fixed; top:20%; left:30%; width:40%; background:#fff; padding:20px; border:1px solid #aaa; box-shadow: 0 0 10px #000;">
+    <h3>Detalles del Usuario</h3>
+    <p><strong>Nombre:</strong> <span id="modalNombre"></span></p>
+    <p><strong>RUT:</strong> <span id="modalRut"></span></p>
+    <p><strong>Correo:</strong> <span id="modalCorreo"></span></p>
+    <p><strong>Cargo:</strong> <span id="modalCargo"></span></p>
+    <p><strong>Área:</strong> <span id="modalArea"></span></p>
+    <button onclick="cerrarModal()">Cerrar</button>
+  </div>
+
 </body>
 
 
