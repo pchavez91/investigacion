@@ -114,8 +114,28 @@ $('#btnExportarPDFNuevo').click(function () {
     window.open("tcpdf/pdfNuevo.php?PDF="+PDF,"","top=10,left=300,width=700,height=600");
 });
 
-$(document).on('click', '.btnDetalle', function () {
+$(document).off('click', '.btnDetalle').on('click', '.btnDetalle', function () {
     const rut = $(this).data('id');
+    cargarDetalleUsuario(rut);
+});
+
+
+
+function cerrarModal() {
+    $('#modalDetalle').fadeOut();
+}
+
+function mostrarTab(id) {
+  // Ocultar todas las pestañas
+  $('.tab-content').hide();
+  $('.tab-btn').removeClass('active');
+  // Mostrar la pestaña actual y activar su botón
+  $('#' + id).show();
+  $('button[onclick="mostrarTab(\'' + id + '\')"]').addClass('active');
+}
+
+function cargarDetalleUsuario(rut) {
+    console.log("Click en lupa para RUT:", rut);
 
     $.ajax({
         url: 'json/investigacion.php',
@@ -137,17 +157,5 @@ $(document).on('click', '.btnDetalle', function () {
             alert('Error al cargar los detalles');
         }
     });
-});
-
-function cerrarModal() {
-    $('#modalDetalle').fadeOut();
 }
 
-function mostrarTab(id) {
-  // Ocultar todas las pestañas
-  $('.tab-content').hide();
-  $('.tab-btn').removeClass('active');
-  // Mostrar la pestaña actual y activar su botón
-  $('#' + id).show();
-  $('button[onclick="mostrarTab(\'' + id + '\')"]').addClass('active');
-}
