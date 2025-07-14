@@ -231,6 +231,7 @@ if ($accion == "exportar_excel") {
 }
 
 if ($_GET['accion'] == 'detalle_usuario') {
+
     $rut = $_GET['rut'];
 
     $sql = "SELECT 
@@ -238,7 +239,9 @@ if ($_GET['accion'] == 'detalle_usuario') {
                 B.user_rut,
                 B.user_correo,
                 A.cargo_nombre,
-                C.area_nombre
+                C.area_nombre,
+                B.telefono,
+                B.direccion
             FROM Seguridad.dbo.usuario AS B
             INNER JOIN Seguridad.dbo.cargo AS A ON B.cargo_codigo = A.cargo_codigo
             INNER JOIN Seguridad.dbo.areas AS C ON A.area_codigo = C.area_codigo

@@ -84,7 +84,7 @@ $('#btnExportarPDF').click(function () {
 
     const queryString = $.param(filtros);
     const url = 'json/investigacion.php?' + queryString;
-    window.open(url, '_blank'); // así se abre directamente el PDF en una pestaña
+    window.open(url, '_blank'); 
 });
 
 
@@ -100,7 +100,7 @@ $('#btnExportarExcel').click(function () {
         area: $('#area').val()
     };
 
-    const queryString = $.param(filtros); // convierte el objeto en string ?key=value...
+    const queryString = $.param(filtros); 
     const url = 'json/investigacion.php?' + queryString;
 
     window.open(url, '_blank'); // descarga directa
@@ -124,10 +124,12 @@ $(document).on('click', '.btnDetalle', function () {
         dataType: 'json',
         success: function (data) {
             $('#modalNombre').text(data.nombre);
-            $('#modalRut').text(data.rut);
-            $('#modalCorreo').text(data.correo);
-            $('#modalCargo').text(data.cargo);
-            $('#modalArea').text(data.area);
+            $('#modalRut').text(data.user_rut);
+            $('#modalCorreo').text(data.user_correo);
+            $('#modalCargo').text(data.cargo_nombre);
+            $('#modalArea').text(data.area_nombre);
+            $('#modalTelefono').text(data.telefono);
+            $('#modalDireccion').text(data.direccion);
 
             $('#modalDetalle').fadeIn();
         },
@@ -144,7 +146,6 @@ function cerrarModal() {
 function mostrarTab(id) {
   // Ocultar todas las pestañas
   $('.tab-content').hide();
-  // Quitar clase activa de todos los botones
   $('.tab-btn').removeClass('active');
   // Mostrar la pestaña actual y activar su botón
   $('#' + id).show();
