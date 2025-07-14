@@ -32,16 +32,8 @@
     }
   </style>
 
-		   
-  <div class="panel panel-info">
- 
-    <div class="panel box-shadow-none content-header margin-topbar">
-        <div class="form-group col-xs-12 col-lg-12" style="background-color: #39b3d7; border: 1px solid; border-color:#269abc; padding: 10px 3px 10px 5px; line-height: 15px; top:-15px;">
-            <!--colocar al estilo-->
-            <b><font size=3 color="white"><center>BUSQUEDA DE USUARIOS</center></font></b>
-        </div>
-    </div>
-  </div>
+  <img src="tcpdf/images/logo.jpg" alt="Logo" style="width: 400px; height: auto; display: block; margin: 20px auto;">  
+  
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="script/investigacion.js"></script>                             
 
@@ -125,8 +117,7 @@
       <button onclick="cerrarModal()" style="padding: 8px 16px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Cerrar</button>
     </div>
   </div>
-
-
+  
 </body>
 
 
