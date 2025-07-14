@@ -41,13 +41,14 @@
 <body>
 
   <div class="container">
-    <h3>Buscar Usuario</h3>
+    <h3 style="text-align: left; color: #ff000de1;">Buscar Usuarios</h3>
+
     <form id="formBuscar" class="form-inline">
         <input type="text" id="nombre" class="form-control" placeholder="Nombre">
         <input type="text" id="rut" class="form-control" placeholder="RUT">
         <input type="text" id="correo" class="form-control" placeholder="Correo">
         <select id="vigente" class="form-control">
-            <option value="">Vigente</option>
+            <option value="">Seleccione Vigencia</option>
             <option value="S">Sí</option>
             <option value="N">No</option>
         </select>
@@ -67,7 +68,7 @@
     <button id="btnExportarPDFNuevo" class="btn btn-success">Exportar a PDF Nuevo</button>
 
     <hr>
-    <div class="table-responsive" style="overflow-x: auto;">
+    <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
         <table id="tablaResultados" class="table table-bordered" style="min-width: 1000px;">
             <thead>
                 <tr>
@@ -117,7 +118,7 @@
       <button onclick="cerrarModal()" style="padding: 8px 16px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Cerrar</button>
     </div>
   </div>
-  
+
 </body>
 
 
