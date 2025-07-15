@@ -19,5 +19,10 @@
    $('#carga-contenido').load('forms/investigacion.php');
    });
 
+    $('#login_patricio_sub').click(function() { 
+   $('#carga-contenido').load('forms/loging.php');
+   });
+
+
 
 
