@@ -10,7 +10,7 @@
 
 <body>    
     <form id="login-form" method="post" action="forms/loging.php" style="max-width: 400px; max-height: 400px; margin: auto; padding: 60px; background-color: #0de956ff; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">    
-        <b style="text-align: center; color: blue; text-size: 24">Iniciar Sesión</b>
+        <h1 style="text-align: center; color: #333;">Iniciar Sesión</h1>
     
         <div class="form-group">
             <label for="username"></label>
@@ -21,8 +21,14 @@
             <input type="password" id="password" name="password" required placeholder="Contraseña" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">    
         </div>
         <div class="form-group">
-            <button type="submit" id="login-button" style="margin-right: 10px;">Iniciar Sesión</button>
-            <button type="button" id="cancelar-button" style="margin-left: 10px;">Cancelar</button>
+            <button type="submit" id="login-button" style="background-color:#2a31cd; color:white; padding:10px 20px; border:none; cursor:pointer;"
+                onmouseover="this.style.backgroundColor='blue'" 
+                onmouseout="this.style.backgroundColor='#2a31cd'">Iniciar Sesión
+            </button>
+            <button type="button" id="cancelar-button" style="background-color:#2a31cd; color:white; padding:10px 20px; border:none; cursor:pointer;"
+                onmouseover="this.style.backgroundColor='red'" 
+                onmouseout="this.style.backgroundColor='#2a31cd'">Cancelar
+            </button>
         </div>
     </form>
     <div id="login-message"></div>
