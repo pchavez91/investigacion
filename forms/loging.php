@@ -25,10 +25,13 @@
                 onmouseover="this.style.backgroundColor='blue'" 
                 onmouseout="this.style.backgroundColor='#2a31cd'">Iniciar Sesión
             </button>
-            <button type="button" id="cancelar-button" style="background-color:#2a31cd; color:white; padding:10px 20px; border:none; cursor:pointer;"
+            <button type="reset" id="reset-button" style="background-color:#2a31cd; color:white; padding:10px 20px; border:none; cursor:pointer;"
                 onmouseover="this.style.backgroundColor='red'" 
-                onmouseout="this.style.backgroundColor='#2a31cd'">Cancelar
+                onmouseout="this.style.backgroundColor='#2a31cd'">Borrar
             </button>
+            <label>
+                <input type="checkbox" name="recordar">recordarme
+            </label>
         </div>
         <div id="login-message" style="color:red; text-align:center; margin-top:10px;"></div>
     </form>    
