@@ -9,7 +9,7 @@
 </head>
 
 <body>    
-    <form id="login-form" method="post" action="script/login.js" style="max-width: 400px; max-height: 400px; margin: auto; padding: 60px; background-color: #0de956ff; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">    
+    <form id="login-form" method="post" action="json/loging.php" style="max-width: 400px; max-height: 400px; margin: auto; padding: 60px; background-color: #0de956ff; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">    
         <h1 style="text-align: center; color: #333;">Iniciar Sesión</h1>
     
         <div class="form-group">
@@ -34,6 +34,3 @@
     </form>    
 
 </body>
-
-<!-- Cargar JS -->
-    <script src="script/login.js"></script>
