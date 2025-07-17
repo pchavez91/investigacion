@@ -9,12 +9,12 @@
 </head>
 
 <body>    
-    <form id="login-form" method="post" action="forms/loging.php" style="max-width: 400px; max-height: 400px; margin: auto; padding: 60px; background-color: #0de956ff; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">    
+    <form id="login-form" method="post" action="script/login.js" style="max-width: 400px; max-height: 400px; margin: auto; padding: 60px; background-color: #0de956ff; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">    
         <h1 style="text-align: center; color: #333;">Iniciar Sesión</h1>
     
         <div class="form-group">
             <label for="username"></label>
-            <input type="text" id="username" name="username" required placeholder="Usuario" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
+            <input type="text" id="username" name="username" required placeholder="RUT" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
         </div>
         <div class="form-group">
             <label for="password"></label>
@@ -30,9 +30,10 @@
                 onmouseout="this.style.backgroundColor='#2a31cd'">Cancelar
             </button>
         </div>
-    </form>
-    <div id="login-message"></div>
-   
-    
+        <div id="login-message" style="color:red; text-align:center; margin-top:10px;"></div>
+    </form>    
 
 </body>
+
+<!-- Cargar JS -->
+    <script src="script/login.js"></script>
